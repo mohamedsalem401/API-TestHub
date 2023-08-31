@@ -1,20 +1,23 @@
 import React from "react";
-import {
-  Typography, Box,
-  IconButton
-} from "@mui/material";
+import { Typography, Box, IconButton } from "@mui/material";
 
-export interface ResponseDiplayer {
+export interface ResponseDiplayerProps {
   response: string;
   error: string;
 }
-export function ResponseDiplayer({ response, error }: ResponseDiplayer) {
+export function ResponseDiplayer({ response, error }: ResponseDiplayerProps) {
   const handleDownload = () => {
     if (response) {
       const blob = new Blob([JSON.stringify(response)], {
         type: "application/json;charset=utf-8",
       });
-      // saveAs(blob, "response.json");
+      const blobURL = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = blobURL;
+      link.download = "data.json";
+
+      link.click();
+      URL.revokeObjectURL(blobURL);
     }
   };
 

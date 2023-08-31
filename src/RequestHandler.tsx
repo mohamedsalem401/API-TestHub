@@ -19,7 +19,7 @@ import { Header } from "./Header";
 import { useEffect } from "react";
 import { HttpMethod, HttpHeader } from "./ApiTester";
 
-interface RequestHandler {
+interface RequestHandlerProps {
   request: HttpState;
   handleRequestChange: (newRequest: HttpState) => void;
 }
@@ -27,7 +27,7 @@ interface RequestHandler {
 export function RequestHandler({
   request,
   handleRequestChange,
-}: RequestHandler) {
+}: RequestHandlerProps) {
   useEffect(() => hljs.highlightAll(), [request]);
 
   const handleUrlChange = (newUrl: string) => {

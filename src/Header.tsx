@@ -1,12 +1,12 @@
-import React from "react";
 import { TextField, Box } from "@mui/material";
 import { HttpHeader } from "./ApiTester";
 
-export interface Header {
+export interface HeaderProps {
   header: HttpHeader;
   handleHeaderChange: (newHeader: HttpHeader) => void;
 }
-export function Header({ header, handleHeaderChange }: Header) {
+
+export function Header({ header, handleHeaderChange }: HeaderProps) {
   return (
     <Box display="flex" flexDirection="row" gap={2}>
       <TextField
