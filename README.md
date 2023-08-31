@@ -1,46 +1,49 @@
-# Getting Started with Create React App
+## API TestHub
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+API TestHub is a comprehensive web application designed to simplify API testing and validation. With API TestHub, you can effortlessly test various endpoints, inspect responses, and ensure the functionality and correctness of your APIs.
 
-## Available Scripts
+### Usage
 
-In the project directory, you can run:
+1. Clone the repository:
 
-### `npm start`
+   ```shell
+   git clone https://github.com/mohamedsalem401/API-TestHub.git
+   ```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+2. Install dependencies:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+   ```shell
+   cd API-TestHub
+   npm install
+   ```
 
-### `npm test`
+3. Start the development server:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+   ```shell
+   npm start
+   ```
 
-### `npm run build`
+4. Open your browser and navigate to `http://localhost:3000` to access the application.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Features
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+API TestHub offers a wide range of features tailored for API testing:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Test Endpoints: Easily send requests to different API endpoints and view responses.
+- Custom Headers: Add custom headers to your requests for specific API testing scenarios.
+- Request Methods: Support for various HTTP methods including GET, POST, PUT, DELETE, and more.
+- Response Inspection: Inspect response data and status codes for thorough testing.
+- Data Visualization: Display JSON responses in a structured and easily readable format.
+- History Tracking: Keep track of your testing history for convenient retesting.
 
-### `npm run eject`
+### Contributing
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Contributions are encouraged! If you encounter issues or have ideas for enhancements, please create a new issue or submit a pull request on [GitHub](https://github.com/mohamedsalem401/API-TestHub).
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### License
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+All Rights Reserved
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+This project is the intellectual property of Mohamed Yahia. All rights are reserved. No part of this project may be distributed or transmitted in any form or by any means, including copying, without the prior written permission of the owner.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+For inquiries, please contact salemmohamed@gmail.com :)
