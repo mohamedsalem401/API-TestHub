@@ -1,35 +1,17 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Box } from "@mui/material";
 import "highlight.js/styles/atom-one-dark.css";
-import { ResponseDiplayer } from "./ResponseDiplayer";
-import { HttpState } from "./HttpState";
+// import { ResponseDiplayer } from "./ResponseDiplayer";
+// import { RequestHandler } from "./RequestHandler";
+import { useSelector } from "react-redux";
+import { HttpState } from "./state/store";
 import { RequestHandler } from "./RequestHandler";
-import { configureStore } from "@reduxjs/toolkit";
 
-export interface HttpHeader {
-  [key: string]: string;
-}
-
-export enum HttpMethod {
-  GET = "GET",
-  POST = "POST",
-  PUT = "PUT",
-  DELETE = "DELETE",
-  PATCH = "PATCH",
-}
-enum HttpStateAction {}
-const reducer = (
-  state = new HttpState(),
-  action: { type: HttpStateAction; payload?: any }
-) => {
-  return state;
-};
-const store = configureStore({ reducer: reducer });
-
-const ApiEndpointTester = () => {
-  const [request, setRequest] = useState(new HttpState());
-  const handleRequestChange = (newRequest: HttpState) => {
-    setRequest(newRequest);
+const ApiEndpointTester = ({ index }: { index: number }) => {
+  const request = useSelector((store: HttpState) => store);
+  // const [request, setRequest] = useState(initialState);
+  const handleRequestChange = () => {
+    // setRequest(newRequest);
   };
 
   return (
@@ -51,11 +33,9 @@ const ApiEndpointTester = () => {
         justifyContent="space-between"
         alignItems="flex-start"
       >
-        <RequestHandler
-          request={request}
-          handleRequestChange={handleRequestChange}
-        />
-        <ResponseDiplayer response={request.response} error={request.error} />
+        {/* <Box>{request.url}</Box> */}
+        <RequestHandler index={index} />
+        {/* <ResponseDiplayer response={request.response} error={request.error} /> */}
       </Box>
     </Box>
   );

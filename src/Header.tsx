@@ -1,5 +1,5 @@
 import { TextField, Box } from "@mui/material";
-import { HttpHeader } from "./ApiTester";
+import { HttpHeader } from "./state/store";
 
 export interface HeaderProps {
   header: HttpHeader;

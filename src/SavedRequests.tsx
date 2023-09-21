@@ -1,9 +1,8 @@
 import React from "react";
 import { Typography, Stack, Box } from "@mui/material";
-import { HttpMethod, HttpHeader } from "./ApiTester";
+import { HttpMethod, HttpHeader } from "./state/store";
 
-
-export function SavedRequests({ requests }: { requests: any; }) {
+export function SavedRequests({ requests }: { requests: any }) {
   return (
     <Stack
       maxWidth="100%"
@@ -27,22 +26,24 @@ export function SavedRequests({ requests }: { requests: any; }) {
     >
       {requests.map(
         (req: {
-          req: string |
-          number |
-          boolean |
-          ((prevState: string) => string) |
-          React.ReactElement<any, string | React.JSXElementConstructor<any>> |
-          Iterable<React.ReactNode> |
-          null |
-          undefined;
-          method: string |
-          number |
-          boolean |
-          ((prevState: HttpMethod) => HttpMethod) |
-          React.ReactElement<any, string | React.JSXElementConstructor<any>> |
-          Iterable<React.ReactNode> |
-          null |
-          undefined;
+          req:
+            | string
+            | number
+            | boolean
+            | ((prevState: string) => string)
+            | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+            | Iterable<React.ReactNode>
+            | null
+            | undefined;
+          method:
+            | string
+            | number
+            | boolean
+            | ((prevState: HttpMethod) => HttpMethod)
+            | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+            | Iterable<React.ReactNode>
+            | null
+            | undefined;
           headers: React.SetStateAction<HttpHeader[]>;
           body: React.SetStateAction<string>;
         }) => (

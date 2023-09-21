@@ -1,4 +1,4 @@
-import { HttpState } from "./HttpState";
+//@
 import {
   TextField,
   Button,
@@ -17,42 +17,22 @@ import "highlight.js/styles/atom-one-dark.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Header } from "./Header";
 import { useEffect } from "react";
-import { HttpMethod, HttpHeader } from "./ApiTester";
+import { HttpState, HttpMethod, HttpHeader } from "./state/store";
+import { useDispatch, useSelector } from "react-redux";
 
-interface RequestHandlerProps {
-  request: HttpState;
-  handleRequestChange: (newRequest: HttpState) => void;
-}
+export function RequestHandler({ index }: { index: number }) {
+  const request = useSelector((state: HttpState[]) => state[index]);
+  const dispatcher = useDispatch();
 
-export function RequestHandler({
-  request,
-  handleRequestChange,
-}: RequestHandlerProps) {
   useEffect(() => hljs.highlightAll(), [request]);
 
-  const handleUrlChange = (newUrl: string) => {
-    const newRequest = request.clone();
-    newRequest.url = newUrl;
-    handleRequestChange(newRequest);
-  };
+  const handleUrlChange = (newUrl: string) => {};
 
-  const handleMethodChange = (newMethod: HttpMethod) => {
-    const newRequest = request.clone();
-    newRequest.method = newMethod;
-    handleRequestChange(newRequest);
-  };
+  const handleMethodChange = (newMethod: HttpMethod) => {};
 
-  const handleHeadersChange = (newHeaders: HttpHeader[]) => {
-    const newRequest = request.clone();
-    newRequest.headers = newHeaders;
-    handleRequestChange(newRequest);
-  };
+  const handleHeadersChange = (newHeaders: HttpHeader[]) => {};
 
-  const handleBodyChange = (newBody: string) => {
-    const newRequest = request.clone();
-    newRequest.body = newBody;
-    handleRequestChange(newRequest);
-  };
+  const handleBodyChange = (newBody: string) => {};
 
   const handleAddHeader = () => {
     handleHeadersChange([...request.headers, { "": "" }]);
@@ -71,9 +51,9 @@ export function RequestHandler({
   };
 
   const sendRequest = () => {
-    request.sendRequest().then((newRequest) => {
-      handleRequestChange(newRequest);
-    });
+    // request.sendRequest().then((newRequest) => {
+    //   handleRequestChange(newRequest);
+    // });
   };
   return (
     <Box>
@@ -87,10 +67,10 @@ export function RequestHandler({
       >
         <Stack
           direction="row"
-          gap={2}
+          // gap={2}
           sx={{ width: "100%" }}
           alignItems="center"
-          mb={3}
+          // mb={3}
         >
           <FormControl>
             <InputLabel>HTTP Method</InputLabel>
@@ -98,6 +78,7 @@ export function RequestHandler({
               value={request.method}
               label="HTTP Method"
               onChange={(e) => handleMethodChange(e.target.value as HttpMethod)}
+              style={{ width: "150px" }}
             >
               {Object.keys(HttpMethod).map((methodName) => (
                 <MenuItem key={methodName} value={methodName}>
@@ -107,12 +88,16 @@ export function RequestHandler({
             </Select>
           </FormControl>
           <TextField
-            variant="outlined"
             label="API endpoint URL"
             value={request.url}
-            onChange={(e) => handleUrlChange(e.target.value)}
-            required
-            sx={{ flex: 1 }}
+            onChange={(e) => {
+              dispatcher({
+                type: "changeUrl",
+                payload: { index: index, newUrl: e.target.value },
+              });
+            }}
+            variant="outlined"
+            fullWidth
           />
         </Stack>
         <Collapse
