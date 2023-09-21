@@ -4,6 +4,7 @@ import "highlight.js/styles/atom-one-dark.css";
 import { ResponseDiplayer } from "./ResponseDiplayer";
 import { HttpState } from "./HttpState";
 import { RequestHandler } from "./RequestHandler";
+import { configureStore } from "@reduxjs/toolkit";
 
 export interface HttpHeader {
   [key: string]: string;
@@ -16,6 +17,14 @@ export enum HttpMethod {
   DELETE = "DELETE",
   PATCH = "PATCH",
 }
+enum HttpStateAction {}
+const reducer = (
+  state = new HttpState(),
+  action: { type: HttpStateAction; payload?: any }
+) => {
+  return state;
+};
+const store = configureStore({ reducer: reducer });
 
 const ApiEndpointTester = () => {
   const [request, setRequest] = useState(new HttpState());
@@ -32,15 +41,12 @@ const ApiEndpointTester = () => {
         justifyContent: "center",
         alignItems: "center",
         padding: 16,
-        border: "1px solid black",
-        borderRadius: "16px",
-        width: "720px",
-        overflow: "scroll",
-      }}                     
+        alignSelf: "stretch",
+      }}
     >
       <Box
         display="flex"
-        flexDirection="row"
+        flexDirection="column"
         gap={3}
         justifyContent="space-between"
         alignItems="flex-start"

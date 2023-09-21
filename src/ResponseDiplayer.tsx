@@ -22,7 +22,7 @@ export function ResponseDiplayer({ response, error }: ResponseDiplayerProps) {
   };
 
   return (
-    <Box sx={{ flex: 1, width: { xs: "100%", md: "45%" } }} textAlign="start">
+    <Box sx={{ flex: 1 }} textAlign="start">
       <Typography
         variant="h6"
         sx={{ display: "flex", alignItems: "center" }}
