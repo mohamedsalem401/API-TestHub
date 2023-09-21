@@ -1,12 +1,37 @@
 import { TextField, Box } from "@mui/material";
-import { HttpHeader } from "./state/store";
+import { HttpState } from "./state/store";
+import { useSelector, useDispatch } from "react-redux";
+import { useCallback } from "react";
+import { HeaderAction } from "./state/HeaderAction";
 
-export interface HeaderProps {
-  header: HttpHeader;
-  handleHeaderChange: (newHeader: HttpHeader) => void;
-}
+export function Header({
+  index,
+  headerIndex,
+}: {
+  index: number;
+  headerIndex: number;
+}) {
+  const header = useSelector(
+    (state: HttpState[]) => state[index].headers[headerIndex]
+  );
+  const dispatch: (action: HeaderAction) => void = useDispatch();
 
-export function Header({ header, handleHeaderChange }: HeaderProps) {
+  const handleKeyChange = useCallback((newKey: string) => {
+    const newHeader = { key: newKey, value: header.value };
+    dispatch({
+      type: "changeHeader",
+      payload: { index: index, headerIndex: headerIndex, newHeader: newHeader },
+    });
+  }, []);
+
+  const handleValueChange = useCallback((newValue: string) => {
+    const newHeader = { key: header.key, value: newValue };
+    dispatch({
+      type: "changeHeader",
+      payload: { index: index, headerIndex: headerIndex, newHeader: newHeader },
+    });
+  }, []);
+
   return (
     <Box display="flex" flexDirection="row" gap={2}>
       <TextField
@@ -16,18 +41,18 @@ export function Header({ header, handleHeaderChange }: HeaderProps) {
         sx={{ width: "120px" }}
         value={header.key}
         onChange={(e) => {
-          const newHeaderKey = e.target.value;
-          handleHeaderChange({ key: newHeaderKey, value: header.value });
-        }} />
+          handleKeyChange(e.target.value);
+        }}
+      />
       <TextField
         label="Value"
         variant="outlined"
         size="small"
         value={header.value}
         onChange={(e) => {
-          const newHeaderValue = e.target.value;
-          handleHeaderChange({ key: newHeaderValue, value: header.value });
-        }} />
+          handleValueChange(e.target.value);
+        }}
+      />
     </Box>
   );
 }

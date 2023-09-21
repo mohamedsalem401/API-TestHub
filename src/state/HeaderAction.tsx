@@ -7,7 +7,7 @@ export type HeaderAction =
     }
   | {
       type: "changeHeader";
-      payload: { index: number; newHeader: HttpHeader };
+      payload: { index: number; headerIndex: number; newHeader: HttpHeader };
     }
   | {
       type: "removeHeader";
@@ -16,6 +16,7 @@ export type HeaderAction =
 
 export const handleAddHeader = (arr: HttpState[], index: number) => {
   const newArr = [...arr];
+  console.log("add header");
   newArr[index] = {
     ...newArr[index],
     headers: [...newArr[index].headers, { "": "" }],
@@ -26,14 +27,16 @@ export const handleAddHeader = (arr: HttpState[], index: number) => {
 export const handleChangeHeader = (
   arr: HttpState[],
   index: number,
+  headerIndex: number,
   newHeader: HttpHeader
 ) => {
+  console.log(headerIndex, index);
   const newArr = [...arr];
   newArr[index] = {
     ...newArr[index],
     headers: [...newArr[index].headers],
   };
-  newArr[index].headers[index] = newHeader;
+  newArr[index].headers[headerIndex] = newHeader;
   return newArr;
 };
 

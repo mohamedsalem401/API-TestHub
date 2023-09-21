@@ -6,6 +6,7 @@ import {
   handleChangeHeader,
   handleRemoveHeader,
 } from "./HeaderAction";
+import { MethodAction, handleMethodChange } from "./MethodAction";
 
 export interface HttpHeader {
   [key: string]: string;
@@ -28,29 +29,22 @@ export type HttpState = {
   response: any;
   error: string;
 };
-enum MethodAction {
-  changeMethod,
-}
-const handleMethodChange = (
-  arr: HttpState[],
-  index: number,
-  newMethod: HttpMethod
-) => {
-  const newArr = [...arr];
-  newArr[index].method = newMethod;
-  return newArr;
+
+type BodyAction = {
+  type: "changeBody";
+  payload: { index: number; newBody: string };
 };
-enum BodyAction {
-  changeBody,
-}
-const handleBodyChange = (index: number, arr: HttpState[], newBody: string) => {
+const handleBodyChange = (arr: HttpState[], index: number, newBody: string) => {
   const newArr = [...arr];
   newArr[index].body = newBody;
   return newArr;
 };
-enum ResponseAction {
-  changeResponse,
-}
+
+type ResponseAction = {
+  type: "changeResponse";
+  payload: { newMethod: Response };
+};
+
 const handleResponseChange = (
   arr: HttpState[],
   index: number,
@@ -71,12 +65,12 @@ const initialState: HttpState[] = [
     error: "",
   },
 ];
-type HttpStateAction =
+export type HttpStateAction =
   | UrlAction
   | HeaderAction
-  | { type: MethodAction.changeMethod; payload: { newMethod: HttpMethod } }
-  | { type: BodyAction.changeBody; payload: { newBody: string } }
-  | { type: ResponseAction.changeResponse; payload: { newResponse: Response } };
+  | MethodAction
+  | BodyAction
+  | ResponseAction;
 
 const reducer = (state = initialState, action: HttpStateAction) => {
   switch (action.type) {
@@ -86,13 +80,32 @@ const reducer = (state = initialState, action: HttpStateAction) => {
         state,
         action.payload.newUrl
       );
+    case "changeMethod":
+      return handleMethodChange(
+        state,
+        action.payload.index,
+        action.payload.newMethod
+      );
+    case "changeBody":
+      return handleBodyChange(
+        state,
+        action.payload.index,
+        action.payload.newBody
+      );
     case "addHeader":
       return handleAddHeader(state, action.payload.index);
     case "changeHeader":
       return handleChangeHeader(
         state,
         action.payload.index,
+        action.payload.headerIndex,
         action.payload.newHeader
+      );
+    case "removeHeader":
+      return handleRemoveHeader(
+        state,
+        action.payload.index,
+        action.payload.headerIndex
       );
     case "removeHeader":
       return handleRemoveHeader(

@@ -16,45 +16,31 @@ import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Header } from "./Header";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { HttpState, HttpMethod, HttpHeader } from "./state/store";
 import { useDispatch, useSelector } from "react-redux";
+import { MethodAction } from "./state/MethodAction";
 
 export function RequestHandler({ index }: { index: number }) {
   const request = useSelector((state: HttpState[]) => state[index]);
-  const dispatcher = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => hljs.highlightAll(), [request]);
 
-  const handleUrlChange = (newUrl: string) => {};
-
-  const handleMethodChange = (newMethod: HttpMethod) => {};
-
-  const handleHeadersChange = (newHeaders: HttpHeader[]) => {};
-
   const handleBodyChange = (newBody: string) => {};
-
-  const handleAddHeader = () => {
-    handleHeadersChange([...request.headers, { "": "" }]);
-  };
-
-  const handleHeaderChange = (index: number, newHeader: HttpHeader) => {
-    const updatedHeaders = [...request.headers];
-    updatedHeaders[index] = newHeader;
-    handleHeadersChange(updatedHeaders);
-  };
-
-  const handleHeaderRemove = (index: number) => {
-    const updatedHeaders = [...request.headers];
-    updatedHeaders.splice(index, 1);
-    handleHeadersChange(updatedHeaders);
-  };
 
   const sendRequest = () => {
     // request.sendRequest().then((newRequest) => {
     //   handleRequestChange(newRequest);
     // });
   };
+  const handleMethodChange = useCallback((newMethod: HttpMethod) => {
+    dispatch({
+      type: "changeMethod",
+      payload: { index: index, newMethod: newMethod },
+    });
+  }, []);
+
   return (
     <Box>
       <Box
@@ -65,13 +51,7 @@ export function RequestHandler({ index }: { index: number }) {
           alignItems: "start",
         }}
       >
-        <Stack
-          direction="row"
-          // gap={2}
-          sx={{ width: "100%" }}
-          alignItems="center"
-          // mb={3}
-        >
+        <Stack direction="row" sx={{ width: "100%" }} alignItems="center">
           <FormControl>
             <InputLabel>HTTP Method</InputLabel>
             <Select
@@ -91,7 +71,7 @@ export function RequestHandler({ index }: { index: number }) {
             label="API endpoint URL"
             value={request.url}
             onChange={(e) => {
-              dispatcher({
+              dispatch({
                 type: "changeUrl",
                 payload: { index: index, newUrl: e.target.value },
               });
@@ -130,33 +110,37 @@ export function RequestHandler({ index }: { index: number }) {
             <Typography fontWeight={700} fontSize="20px">
               Headers
             </Typography>
-            {request.headers.map((header, index) => (
+            {request.headers.map((header, headerIndex) => (
               <Box
-                key={index}
+                key={headerIndex}
                 display="flex"
                 alignItems="center"
                 gap={1}
                 mt={2}
               >
-                <Header
-                  header={header}
-                  handleHeaderChange={(newHeader: HttpHeader) => {
-                    handleHeaderChange(index, newHeader);
-                  }}
-                />
+                <Header index={index} headerIndex={headerIndex} />
                 <IconButton
                   onClick={() => {
-                    handleHeaderRemove(index);
+                    // handleHeaderRemove(headerIndex);
                   }}
                 >
                   <DeleteIcon />
                 </IconButton>
               </Box>
             ))}
-            <Button sx={{ mt: 1 }} variant="outlined" onClick={handleAddHeader}>
+            <Button
+              sx={{ mt: 1 }}
+              variant="outlined"
+              onClick={() => {
+                dispatch({
+                  type: "addHeader",
+                  payload: { index: index },
+                });
+              }}
+            >
               Add Header
             </Button>
-          </Box>{" "}
+          </Box>
         </Stack>
         <Button
           type="submit"
