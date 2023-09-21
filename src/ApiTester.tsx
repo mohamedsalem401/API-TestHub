@@ -25,12 +25,18 @@ const ApiEndpointTester = () => {
 
   return (
     <Box
-      display="flex"
-      flexDirection="row"
-      gap={5}
-      justifyContent="center"
-      alignItems="center"
-      padding={5}
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        gap: 5,
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 16,
+        border: "1px solid black",
+        borderRadius: "16px",
+        width: "720px",
+        overflow: "scroll",
+      }}                     
     >
       <Box
         display="flex"

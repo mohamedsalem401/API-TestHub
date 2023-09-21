@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+.hover:hover {
+  background-color: #282c34;
+}
