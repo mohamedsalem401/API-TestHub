@@ -10,7 +10,7 @@ function App() {
   return (
     <Box
       style={{
-        padding: 64,
+        // padding: 64,
         display: "flex",
         width: "100%",
       }}

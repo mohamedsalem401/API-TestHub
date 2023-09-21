@@ -40,3 +40,7 @@
 .hover:hover {
   background-color: #282c34;
 }
+
+.tab {
+  width: fit-content;
+}
