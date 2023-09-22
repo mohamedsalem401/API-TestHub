@@ -1,5 +1,5 @@
 import "./App.css";
-import ApiEndpointTester from "./ApiTester";
+import ApiEndpoint from "./ApiTester";
 import React, { useState } from "react";
 import ProjectContainer from "./ProjectContainer";
 import { Box } from "@mui/material";
@@ -16,7 +16,7 @@ function App() {
       }}
     >
       <Provider store={store}>
-        <ApiEndpointTester index={0}/>
+        <ApiEndpoint index={0}/>
       </Provider>
     </Box>
   );
