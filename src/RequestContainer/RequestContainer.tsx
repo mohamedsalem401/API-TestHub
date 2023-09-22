@@ -15,7 +15,7 @@ export function RequestContainer({ index }: { index: number }) {
       }}
     >
       <URIContainer index={index}/>
-      <RequestHeadersContainer />
+      <RequestHeadersContainer index={index}/>
       <RequestBodyContainer />
     </Box>
   );

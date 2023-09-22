@@ -1,18 +1,51 @@
 import { Box } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridCellParams,
+  GridColDef,
+  MuiEvent,
+} from "@mui/x-data-grid";
 
 const columns: GridColDef[] = [
-  { field: "Key", headerName: "Key" },
-  { field: "Value", headerName: "Value" },
-];
-const rows = [
-  { id: 0, Key: "Roxie", Value: "Harvey" },
-  { id: 1, Key: "Snow", Value: "Jon" },
-  { id: 2, Key: "Lannister", Value: "Cersei" },
-  { id: 3, Key: "Lannister", Value: "Jaime" },
+  { field: "key", headerName: "key", editable: true },
+  { field: "value", headerName: "value", editable: true },
 ];
 
-export function Headers() {
+export function Headers({
+  rows,
+  onChange,
+}: {
+  rows: {
+    id: number;
+    key: string;
+    value: string;
+  }[];
+  onChange?: (
+    rowIndex: number,
+    changedColumn: string,
+    newValue: string
+  ) => void;
+}) {
+  // if onChange is undefined, make the rows uneditable
+  if (!onChange) {
+    for (let index = 0; index < columns.length; index++) {
+      columns[index] = {
+        ...columns[index],
+        editable: false,
+      };
+    }
+  }
+
+  const handleCellChange = (params: GridCellParams, event: MuiEvent) => {
+    if (onChange) {
+      onChange(
+        parseInt(params.id as string),
+        params.field,
+        params.row[params.field] || ""
+      );
+    }
+  };
+
   return (
     <Box sx={{ width: "100%" }}>
       <DataGrid
@@ -27,7 +60,9 @@ export function Headers() {
         disableRowSelectionOnClick
         disableVirtualization
         disableDensitySelector
-        disableEval />
+        disableEval
+        onCellEditStop={handleCellChange}
+      />
     </Box>
   );
 }

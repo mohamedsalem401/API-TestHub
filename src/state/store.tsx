@@ -57,7 +57,7 @@ const handleResponseChange = (
 const initialState: HttpState[] = [
   {
     url: "https://example.com",
-    headers: [],
+    headers: [{ key: "type", value: "string" }],
     method: HttpMethod.GET,
     body: "",
     isLoading: false,

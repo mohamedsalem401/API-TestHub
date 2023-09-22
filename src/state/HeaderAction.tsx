@@ -30,13 +30,19 @@ export const handleChangeHeader = (
   headerIndex: number,
   newHeader: HttpHeader
 ) => {
-  console.log(headerIndex, index);
+  // Clone the original array and the affected objects
   const newArr = [...arr];
+  const updatedHeaders = [...newArr[index].headers];
+
+  // Update the specified header with the new value
+  updatedHeaders[headerIndex] = newHeader;
+
+  // Update the specific object in the array with the updated headers
   newArr[index] = {
     ...newArr[index],
-    headers: [...newArr[index].headers],
+    headers: updatedHeaders,
   };
-  newArr[index].headers[headerIndex] = newHeader;
+
   return newArr;
 };
 
