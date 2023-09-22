@@ -1,5 +1,5 @@
 import { Box, Tab, Tabs, Typography } from "@mui/material";
-import { Headers } from "../columns";
+import { KeyValueTable } from "../KeyValueTable";
 import { useDispatch, useSelector } from "react-redux";
 import { HttpHeader, HttpState } from "../state/store";
 import { useCallback } from "react";
@@ -54,7 +54,7 @@ export function RequestHeadersContainer({ index }: { index: number }) {
         <Tab className="tab" label="Authentication" value="AUTHENTICATION" />
         <Tab className="tab" label="Raw" value="RAW" />
       </Tabs>
-      <Headers rows={rows} onChange={onChange} />
+      <KeyValueTable rows={rows} onChange={onChange} />
     </Box>
   );
 }

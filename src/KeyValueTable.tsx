@@ -11,7 +11,7 @@ const columns: GridColDef[] = [
   { field: "value", headerName: "value", editable: true },
 ];
 
-export function Headers({
+export function KeyValueTable({
   rows,
   onChange,
 }: {

@@ -12,21 +12,15 @@ import {
   InputLabel,
   Select,
 } from "@mui/material";
-import hljs from "highlight.js";
-import "highlight.js/styles/atom-one-dark.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Header } from "./Header";
 import { useCallback, useEffect } from "react";
 import { HttpState, HttpMethod, HttpHeader } from "./state/store";
 import { useDispatch, useSelector } from "react-redux";
-import { MethodAction } from "./state/MethodAction";
 
 export function RequestHandler({ index }: { index: number }) {
   const request = useSelector((state: HttpState[]) => state[index]);
   const dispatch = useDispatch();
-
-  useEffect(() => hljs.highlightAll(), [request]);
-
   const handleBodyChange = (newBody: string) => {};
 
   const sendRequest = () => {

@@ -16,7 +16,6 @@ export type HeaderAction =
 
 export const handleAddHeader = (arr: HttpState[], index: number) => {
   const newArr = [...arr];
-  console.log("add header");
   newArr[index] = {
     ...newArr[index],
     headers: [...newArr[index].headers, { "": "" }],

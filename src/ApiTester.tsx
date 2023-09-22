@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import "highlight.js/styles/atom-one-dark.css";
 import { ResponseContainer } from "./ResponseContainer";
 import { RequestContainer } from "./RequestContainer/RequestContainer";
 

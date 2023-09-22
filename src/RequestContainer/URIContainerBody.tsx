@@ -50,7 +50,7 @@ export function URIContainerBody({ index }: { index: number }) {
         }}
         size="small"
       >
-        <InputLabel id="http-method-select-label">Method</InputLabel>
+        <InputLabel id="demo-simple-select-label">Age</InputLabel>
         <Select
           label="HTTP Method"
           value={method}
