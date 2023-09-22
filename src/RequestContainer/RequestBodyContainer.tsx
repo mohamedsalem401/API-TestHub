@@ -1,11 +1,6 @@
-import {
-  Box, Tab,
-  Tabs,
-  TextField,
-  Typography
-} from "@mui/material";
+import { Box, Tab, Tabs, TextField, Typography } from "@mui/material";
 
-export function RequestBodyContainer() {
+export function RequestBodyContainer({ index }: { index: number }) {
   return (
     <Box
       style={{
@@ -17,25 +12,27 @@ export function RequestBodyContainer() {
       <Typography variant="h4">Body</Typography>
       <Tabs
         value={"NONE"}
-        style={{
-          display: "flex",
-          height: "42px",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          alignSelf: "stretch",
-        }}
+        variant="scrollable"
+        scrollButtons="auto"
       >
         <Tab className="tab" label="NONE" value="NONE" />
+        <Tab className="tab" label="JSON" value="JSON" />
+        <Tab className="tab" label="XML" value="XML" />
         <Tab className="tab" label="FORM-DATA" value="FORM-DATA" />
-        <Tab className="tab" label="Relative path" value="RELATIVE PATH" />
-        <Tab className="tab" label="API library" value="API LIBRARY" />
+        <Tab className="tab" label="Raw" value="RAW" />
+        <Tab
+          className="tab"
+          label="x-www-form-urlencoded"
+          value="X-WWW-FORM-URLENCODED"
+        />
       </Tabs>
       <TextField
         multiline
         minRows={7}
         style={{
           width: "100%",
-        }} />
+        }}
+      />
     </Box>
   );
 }
