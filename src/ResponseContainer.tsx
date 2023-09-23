@@ -1,5 +1,7 @@
 import { Alert, Box, IconButton, Tab, Tabs, TextField } from "@mui/material";
 import { ContentCopy, Download, OpenInFull } from "@mui/icons-material";
+import { useSelector } from "react-redux";
+import { HttpState } from "./state/store";
 
 export function ResponseContainer({ index }: { index: number }) {
   return (
@@ -14,17 +16,20 @@ export function ResponseContainer({ index }: { index: number }) {
       }}
     >
       {/* Header */}
-      <ResponseActions />
+      <ResponseActions index={index} />
 
       {/* Tabs */}
-      <ResponseTabs />
+      <ResponseTabs index={index} />
 
       {/* Response Body */}
-      <TabView />
+      <TabView index={index} />
     </Box>
   );
 }
-function TabView() {
+
+function TabView({ index }: { index: number }) {
+  const body = useSelector(getResonseBody(index));
+
   return (
     <TextField
       multiline
@@ -32,10 +37,12 @@ function TabView() {
       style={{
         width: "100%",
       }}
+      value={JSON.stringify(body)}
     />
   );
 }
-function ResponseTabs() {
+
+function ResponseTabs({ index }: { index: number }) {
   return (
     <Tabs
       value={"NONE"}
@@ -54,7 +61,15 @@ function ResponseTabs() {
     </Tabs>
   );
 }
-function ResponseActions() {
+
+function ResponseActions({ index }: { index: number }) {
+  const code = useSelector(getCode(index));
+  const status = useSelector(getStatus(index));
+  const time = useSelector((state: HttpState[]) => {
+    return state[index].response.time;
+  });
+  const body = useSelector(getResonseBody(index));
+
   return (
     <Box
       style={{
@@ -66,9 +81,11 @@ function ResponseActions() {
         justifyContent: "space-between",
       }}
     >
-      <Alert severity="success">200 ( OK )</Alert>
-      <Alert severity="info">3200 ms</Alert>
-      <Alert severity="info">32.6 KB</Alert>
+      <Alert severity="success">
+        {code} ( {status} )
+      </Alert>
+      <Alert severity="info">{time.toFixed(0)} ms</Alert>
+      {/* <Alert severity="info">{(body.length / 1000).toFixed(3)} KB</Alert> */}
       <Box style={{ display: "flex", flexDirection: "row", gap: "8px" }}>
         <IconButton>
           <ContentCopy />
@@ -82,4 +99,24 @@ function ResponseActions() {
       </Box>
     </Box>
   );
+}
+
+function getResonseBody(
+  index: number
+): (state: HttpState[]) => ReadableStream<Uint8Array> | null | undefined {
+  return (state: HttpState[]) => {
+    return state[index].response.responseObject?.data.data;
+  };
+}
+
+function getCode(index: number): (state: HttpState[]) => number | undefined {
+  return (state: HttpState[]) => {
+    return state[index].response.responseObject?.status || 200;
+  };
+}
+
+function getStatus(index: number) {
+  return (state: HttpState[]) => {
+    return state[index].response.responseObject?.statusText || "OK";
+  };
 }

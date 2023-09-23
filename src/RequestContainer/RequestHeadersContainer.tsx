@@ -1,12 +1,13 @@
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { KeyValueTable } from "../KeyValueTable";
 import { useDispatch, useSelector } from "react-redux";
-import { HttpHeader, HttpState } from "../state/store";
+import { HttpHeader } from "../state/store";
 import { useCallback } from "react";
 import { HeaderAction } from "../state/HeaderAction";
+import { getHttpState } from "./getHttpState";
 
 export function RequestHeadersContainer({ index }: { index: number }) {
-  const httpState = useSelector((state: HttpState[]) => state[index]);
+  const httpState = useSelector(getHttpState(index));
   const dispatch = useDispatch();
   const rows = httpState.headers.map((header, index) => {
     return { id: index, key: header.key, value: header.value };

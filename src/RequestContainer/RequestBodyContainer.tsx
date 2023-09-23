@@ -27,7 +27,7 @@ export function RequestBodyContainer({ index }: { index: number }) {
 function RequestBody({ index }: { index: number }) {
   const activeTab = useSelector(getRequestBodyActiveTab(index));
   const body = useSelector((state: HttpState[]) => {
-    return state[index].body[activeTab].value;
+    return state[index].body.data[activeTab].value;
   });
   const dispatch = useDispatch();
 
@@ -46,15 +46,9 @@ function RequestBody({ index }: { index: number }) {
     JSON: "json",
     XML: "xml",
     HTML: "html",
-    Raw: ""
+    Raw: "",
   };
-  /**
-   * NONE: no element
-   * JSON: Editor json
-   * XML: Editor xml
-   * // FormData: table
-   *
-   */
+
   return (
     <Box>
       {activeTab != "NONE" && (

@@ -1,5 +1,5 @@
 import { Tab, Tabs } from "@mui/material";
-import { HttpState } from "../state/store";
+import { BodyData, HttpState } from "../state/store";
 import { useSelector, useDispatch } from "react-redux";
 import { useCallback } from "react";
 import { BodyAction } from "../state/BodyAction";
@@ -10,7 +10,7 @@ export function RequestBodyTabs({ index }: { index: number }) {
 
   const dispatch = useDispatch();
 
-  const bodyKeys: (keyof HttpState["body"])[] = [
+  const bodyKeys: (keyof BodyData)[] = [
     "NONE",
     "JSON",
     "XML",
@@ -28,7 +28,7 @@ export function RequestBodyTabs({ index }: { index: number }) {
     XWwwForm: "x-www-form-urlencoded",
   };
 
-  const handleChangeActiveBody = useCallback((key: keyof HttpState["body"]) => {
+  const handleChangeActiveBody = useCallback((key: keyof BodyData) => {
     const action: BodyAction = {
       type: "changeActiveBody",
       payload: { index: index, key: key },
@@ -40,7 +40,7 @@ export function RequestBodyTabs({ index }: { index: number }) {
     <Tabs
       value={activeTab}
       onChange={(e, newValue) => {
-        handleChangeActiveBody(newValue as keyof HttpState["body"]);
+        handleChangeActiveBody(newValue as keyof BodyData);
       }}
       variant="scrollable"
       scrollButtons="auto"

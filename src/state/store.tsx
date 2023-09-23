@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, createAsyncThunk } from "@reduxjs/toolkit";
 import { UrlAction, handleUrlChange } from "./UrlAction";
 import {
   HeaderAction,
@@ -12,6 +12,8 @@ import {
   handleChangeActiveBody,
   handleChangeBody,
 } from "./BodyAction";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { response } from "express";
 
 export interface HttpHeader {
   [key: string]: string;
@@ -25,77 +27,200 @@ export enum HttpMethod {
   PATCH = "PATCH",
 }
 
+export type BodyData = {
+  NONE: {
+    value: string;
+  };
+  JSON: {
+    value: string;
+  };
+  Raw: {
+    value: string;
+  };
+  HTML: {
+    value: string;
+  };
+  XML: {
+    value: string;
+  };
+};
+
+type HttpResponse = {
+  isLoading: boolean;
+  time: number;
+  responseObject?: AxiosResponse;
+};
+
 export type HttpState = {
   url: string;
   headers: HttpHeader[];
   method: HttpMethod;
   body: {
-    NONE: { active: boolean; value: string };
-    JSON: { active: boolean; value: string };
-    // FormData: { active: boolean; value: string };
-    Raw: { active: boolean; value: string };
-    HTML: { active: boolean; value: string };
-    XML: { active: boolean; value: string };
-    // XWwwForm: { active: boolean; value: string };
+    active: keyof BodyData;
+    data: BodyData;
   };
-  isLoading: boolean;
-  response: any;
-  error: string;
+  response: HttpResponse;
 };
 
-type ResponseAction = {
-  type: "changeResponse";
-  payload: { newMethod: Response };
+function convertHeadersArrayToAxiosHeaders(headersArray: HttpHeader[]) {
+  const axiosHeaders: { [key: string]: string } = {};
+
+  for (const header of headersArray) {
+    if (header.key && header.value) {
+      axiosHeaders[header.key] = header.value;
+    }
+  }
+
+  return axiosHeaders;
+}
+
+async function makeHttpRequest(
+  url: string,
+  method: HttpMethod,
+  headers: { [key: string]: string },
+  body: string
+): Promise<AxiosResponse | undefined> {
+  const axiosConfig = {
+    url,
+    method,
+    headers: headers,
+    data: body, // Use the appropriate body based on the method
+  };
+
+  const response = await axios(axiosConfig);
+
+  // Handle the successful response
+  return response;
+}
+
+export type RequestAction =
+  | {
+      type: "sendRequest";
+      payload: { index: number; dispatch: any };
+    }
+  | {
+      type: "setLoading";
+      payload: { index: number };
+    }
+  | {
+      type: "setResponse";
+      payload: { index: number; response: HttpResponse };
+    };
+
+const handleSetLoading = (state: HttpState[], index: number) => {
+  const newState = [...state];
+  const httpState = newState[index];
+  const newHttpState = { ...httpState };
+
+  newHttpState.response = {
+    isLoading: true,
+    responseObject: undefined,
+    time: 0,
+  };
+
+  newState[index] = newHttpState;
+  return newState;
 };
 
-const handleResponseChange = (
+const handleSetResponse = (
   state: HttpState[],
   index: number,
-  newResponse: Response
+  responseObject: HttpResponse
 ) => {
-  const newstate = [...state];
-  newstate[index].response = newResponse;
-  return newstate;
+  const newState = [...state];
+  const httpState = newState[index];
+  const newHttpState = { ...httpState };
+
+  newHttpState.response = responseObject;
+
+  newState[index] = newHttpState;
+  return newState;
+};
+
+// TODO Refactor this function
+export const handleSendRequest = (state: HttpState[], index: number) => {
+  const httpState = state[index];
+  const startTime = performance.now();
+  const axiosHeaders = convertHeadersArrayToAxiosHeaders(httpState.headers);
+  const active = httpState.body.active;
+  const body = httpState.body.data[active].value;
+
+  const response = makeHttpRequest(
+    httpState.url,
+    httpState.method,
+    axiosHeaders,
+    body
+  )
+    .then((response) => {
+      const endTime = performance.now();
+      const time = endTime - startTime;
+
+      const setResponseAction: RequestAction = {
+        type: "setResponse",
+        payload: {
+          index: index,
+          response: {
+            isLoading: false,
+            responseObject: response,
+            time: time,
+          },
+        },
+      };
+
+      store.dispatch(setResponseAction);
+    })
+    .catch((response) => {
+      const endTime = performance.now();
+      const time = endTime - startTime;
+
+      const setResponseAction: RequestAction = {
+        type: "setResponse",
+        payload: {
+          index: index,
+          response: {
+            isLoading: false,
+            responseObject: response,
+            time: time,
+          },
+        },
+      };
+
+      store.dispatch(setResponseAction);
+    });
+
+  return state;
 };
 
 const initialState: HttpState[] = [
   {
-    url: "https://example.com",
+    url: "https://dummy.restapiexample.com/api/v1/employees",
     headers: [{ key: "type", value: "string" }],
     method: HttpMethod.GET,
     body: {
-      NONE: {
-        active: true,
-        value: "",
+      active: "NONE",
+      data: {
+        NONE: {
+          value: "",
+        },
+        JSON: {
+          value: "{}",
+        },
+        Raw: {
+          value: "",
+        },
+        HTML: {
+          value: "",
+        },
+        XML: {
+          value: "",
+        },
       },
-      JSON: {
-        active: false,
-        value: "{}",
-      },
-      Raw: {
-        active: false,
-        value: "",
-      },
-      HTML: {
-        active: false,
-        value: "",
-      },
-      XML: {
-        active: false,
-        value: "",
-      },
-      /* FormData: {
-        active: false,
-        value: "",
-      },
-      XWwwForm: {
-        active: false,
-        value: "",
-      }, */
     },
-    isLoading: false,
-    response: undefined,
-    error: "",
+    response: {
+      isLoading: false,
+      responseObject: undefined,
+      time: 0,
+    },
   },
 ];
 
@@ -104,7 +229,7 @@ export type HttpStateAction =
   | HeaderAction
   | MethodAction
   | BodyAction
-  | ResponseAction;
+  | RequestAction;
 
 const reducer = (state = initialState, action: HttpStateAction) => {
   switch (action.type) {
@@ -148,14 +273,19 @@ const reducer = (state = initialState, action: HttpStateAction) => {
         action.payload.index,
         action.payload.headerIndex
       );
-    case "removeHeader":
-      return handleRemoveHeader(
+    case "sendRequest":
+      return handleSendRequest(state, action.payload.index);
+    case "setLoading":
+      return handleSetLoading(state, action.payload.index);
+    case "setResponse":
+      return handleSetResponse(
         state,
         action.payload.index,
-        action.payload.headerIndex
+        action.payload.response
       );
     default:
       return state;
   }
 };
+
 export const store = configureStore({ reducer: reducer });

@@ -1,38 +1,27 @@
-import { HttpState } from "./store";
+import { BodyData, HttpState } from "./store";
 
 export type BodyAction =
   | {
       type: "changeActiveBody";
-      payload: { index: number; key: keyof HttpState["body"] };
+      payload: { index: number; key: keyof BodyData };
     }
   | {
       type: "changeBody";
-      payload: { index: number; key: keyof HttpState["body"]; newBody: string };
+      payload: { index: number; key: keyof BodyData; newBody: string };
     };
 
 export const handleChangeActiveBody = (
   state: HttpState[],
   index: number,
-  key: keyof HttpState["body"]
+  key: keyof BodyData
 ): HttpState[] => {
   const newState = [...state];
   const newHttpState = { ...newState[index] };
-  const newBody = { ...newHttpState.body };
 
-  // Deactivate all body types
-  for (const bodyKey in newBody) {
-    (newBody as any)[bodyKey] = {
-      ...(newBody as any)[bodyKey],
-      active: false,
-    };
-  }
-
-  // Activate the specified body type
-  newBody[key] = {
-    ...newBody[key],
-    active: true,
+  newHttpState.body = {
+    ...newHttpState.body,
+    active: key,
   };
-  newHttpState.body = newBody;
   newState[index] = newHttpState;
   return newState;
 };
@@ -40,18 +29,19 @@ export const handleChangeActiveBody = (
 export const handleChangeBody = (
   state: HttpState[],
   index: number,
-  key: keyof HttpState["body"],
+  key: keyof BodyData,
   newBodyValue: string
 ): HttpState[] => {
   const newState = [...state];
   const newHttpState = { ...newState[index] };
-  const newBody = { ...newHttpState.body };
-  // Activate the specified body type
-  newBody[key] = {
-    ...newBody[key],
-    value: newBodyValue,
+
+  newHttpState.body = {
+    ...newHttpState.body,
+    data: {
+      ...newHttpState.body.data,
+      [key]: { value: newBodyValue },
+    },
   };
-  newHttpState.body = newBody;
   newState[index] = newHttpState;
   return newState;
 };
