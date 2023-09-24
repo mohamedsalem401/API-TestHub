@@ -194,7 +194,7 @@ export const handleSendRequest = (state: HttpState[], index: number) => {
 const initialState: HttpState[] = [
   {
     url: "https://dummy.restapiexample.com/api/v1/employees",
-    headers: [{ key: "type", value: "string" }],
+    headers: [],
     method: HttpMethod.GET,
     body: {
       active: "NONE",
