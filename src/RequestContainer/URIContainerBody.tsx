@@ -7,7 +7,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { HttpMethod, HttpState } from "../state/store";
+import { HttpMethod, HttpState } from "../state/types";
 import { useCallback } from "react";
 import { MethodAction } from "../state/MethodAction";
 import { UrlAction } from "../state/UrlAction";

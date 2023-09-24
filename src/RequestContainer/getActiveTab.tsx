@@ -1,4 +1,4 @@
-import { BodyData, HttpState } from "../state/store";
+import { BodyData, HttpState } from "../state/types";
 
 export function getActiveTab(
   index: number

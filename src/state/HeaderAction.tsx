@@ -1,4 +1,4 @@
-import { HttpHeader, HttpState } from "./store";
+import { HttpHeader, HttpState } from "./types";
 
 export type HeaderAction =
   | {

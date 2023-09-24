@@ -1,4 +1,4 @@
-import { BodyData, HttpState } from "./store";
+import { BodyData, HttpState } from "./types";
 
 export type BodyAction =
   | {

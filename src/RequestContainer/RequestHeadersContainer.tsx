@@ -1,7 +1,7 @@
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { KeyValueTable } from "../KeyValueTable";
 import { useDispatch, useSelector } from "react-redux";
-import { HttpHeader } from "../state/store";
+import { HttpHeader } from "../state/types";
 import { useCallback } from "react";
 import { HeaderAction } from "../state/HeaderAction";
 import { getHttpState } from "./getHttpState";

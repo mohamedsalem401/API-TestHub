@@ -1,5 +1,5 @@
 import { TextField, Box } from "@mui/material";
-import { HttpState } from "./state/store";
+import { HttpState } from "./state/types";
 import { useSelector, useDispatch } from "react-redux";
 import { useCallback } from "react";
 import { HeaderAction } from "./state/HeaderAction";

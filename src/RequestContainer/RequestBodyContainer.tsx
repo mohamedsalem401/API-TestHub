@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getActiveTab as getRequestBodyActiveTab } from "./getActiveTab";
 import { useCallback } from "react";
 import { BodyAction } from "../state/BodyAction";
-import { HttpState } from "../state/store";
+import { HttpState } from "../state/types";
 
 export function RequestBodyContainer({ index }: { index: number }) {
   return (

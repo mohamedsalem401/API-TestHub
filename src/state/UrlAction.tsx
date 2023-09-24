@@ -1,4 +1,4 @@
-import { HttpState } from "./store";
+import { HttpState } from "./types";
 
 export type UrlAction = {
   type: "changeUrl";

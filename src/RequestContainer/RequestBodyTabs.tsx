@@ -1,5 +1,5 @@
 import { Tab, Tabs } from "@mui/material";
-import { BodyData, HttpState } from "../state/store";
+import { BodyData, HttpState } from "../state/types";
 import { useSelector, useDispatch } from "react-redux";
 import { useCallback } from "react";
 import { BodyAction } from "../state/BodyAction";

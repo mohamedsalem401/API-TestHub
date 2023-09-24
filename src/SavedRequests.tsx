@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography, Stack, Box } from "@mui/material";
-import { HttpMethod, HttpHeader } from "./state/store";
+import { HttpMethod, HttpHeader } from "./state/types";
 
 export function SavedRequests({ requests }: { requests: any }) {
   return (

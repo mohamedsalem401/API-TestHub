@@ -1,4 +1,4 @@
-import { HttpMethod, HttpState } from "./store";
+import { HttpMethod, HttpState } from "./types";
 
 export type MethodAction = {
   type: "changeMethod";

@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { ResponseContainer } from "./ResponseContainer";
-import { RequestContainer } from "./RequestContainer/RequestContainer";
+import { RequestContainer } from "./RequestContainer";
 
 const ApiEndpoint = ({ index }: { index: number }) => {
   return (
