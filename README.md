@@ -2,10 +2,25 @@
 
 API TestHub is a comprehensive web application designed to simplify API testing and validation. With API TestHub, you can effortlessly test various endpoints, inspect responses, and ensure the functionality and correctness of your APIs.
 
-![mohamedsalem401 github io_API-TestHub_ (1)](https://github.com/mohamedsalem401/API-TestHub/assets/67981832/46076579-0c17-4e5b-ab29-9443829a991d)
+## 🚀 Key Features
+🌐 Endpoint Testing: Test API endpoints with ease, supporting HTTP methods like GET, POST, PUT, DELETE, and more.
 
+📦 Request Builder: Construct API requests effortlessly using an intuitive and user-friendly interface.
 
-![mohamedsalem401 github io_API-TestHub_](https://github.com/mohamedsalem401/API-TestHub/assets/67981832/6deb43bd-1556-424d-83b4-2edb400c3c84)
+📡 Real-time Monitoring: Monitor API requests and responses in real-time, with detailed information and response times.
+
+🔄 Automated Testing: Create and run automated test suites to ensure the reliability of your APIs.
+
+📦 Authentication Support: Easily handle various authentication methods such as API keys, OAuth, and Basic Authentication.
+
+🧪 Mock Server: Create mock APIs to simulate endpoints for testing purposes, even before the actual API is available.
+
+📡 Webhooks Integration: Trigger tests based on webhooks events and receive immediate notifications of test results.
+
+🚧 Error Handling: Effectively handle errors and exceptions during testing, with detailed error logs and reporting.
+
+![api1](https://github.com/mohamedsalem401/API-TestHub/assets/67981832/ae99f7e9-88e1-493d-881f-ee5a4bba4fcf)
+
 
 
 ### Usage
