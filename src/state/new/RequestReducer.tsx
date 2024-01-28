@@ -8,10 +8,32 @@ export interface Header {
   value: string;
 }
 
+export type SupportedBodyTypes = 'json' | 'html' | 'xml';
+
+interface BodyState {
+  active: number;
+  data: {
+    json: {
+      value: string;
+      id: 1;
+    };
+    html: {
+      value: string;
+      id: 2;
+    };
+    xml: {
+      value: string;
+      id: 3;
+    };
+  };
+}
+export type BodyKey = keyof BodyState['data'];
+
 export interface RequestState {
   method: HttpMethod;
   url: string;
   headers: Header[];
+  body: BodyState;
 }
 
 const initialState: RequestState = {
@@ -24,6 +46,23 @@ const initialState: RequestState = {
       value: 'application/json',
     },
   ],
+  body: {
+    active: 0,
+    data: {
+      json: {
+        value: '',
+        id: 1,
+      },
+      html: {
+        value: '',
+        id: 2,
+      },
+      xml: {
+        value: '',
+        id: 3,
+      },
+    },
+  },
 };
 
 const requestSlice = createSlice({
@@ -56,6 +95,18 @@ const requestSlice = createSlice({
     deleteHeader(state, action: { payload: string }) {
       state.headers = state.headers.filter((h) => h.id !== action.payload);
     },
+    setActiveBody(state, action: { payload: number }) {
+      state.body.active = action.payload;
+    },
+    setBody(state, action: { payload: string }) {
+      const activeBody = getActiveBody(state.body);
+
+      if (!activeBody) {
+        throw new Error('Active body not found');
+      }
+
+      state.body.data[activeBody.type].value = action.payload;
+    },
   },
 });
 
@@ -64,3 +115,20 @@ export const requestReducer = requestSlice.reducer;
 
 export const useSelectRequest = () =>
   useSelector((state: { request: RequestState }) => state.request);
+
+export const getActiveBody = (body: BodyState) => {
+  if (body.active === 0) {
+    return;
+  }
+
+  const activeBody = Object.keys(body.data).find((k) => body.data[k as BodyKey].id === body.active);
+
+  if (!activeBody) {
+    throw new Error('Active body not found');
+  }
+
+  return {
+    type: activeBody as SupportedBodyTypes,
+    value: body.data[activeBody as BodyKey].value,
+  };
+};

@@ -1,46 +1,28 @@
 import { Tab, Tabs } from '@mui/material';
-import { BodyData, HttpState } from '../../state/types';
-import { useSelector, useDispatch } from 'react-redux';
-import { useCallback } from 'react';
-import { BodyAction } from '../../state/BodyAction';
-import { getActiveTab } from './getActiveTab';
+import { useDispatch } from 'react-redux';
+import { a11yProps } from '../../helpers/a11yProps';
+import { requestActions, useSelectRequest } from '../../state/new/RequestReducer';
 
-export function RequestBodyTabs({ index }: { index: number }) {
-  const activeTab = useSelector(getActiveTab(index));
-
+export function RequestBodyTabs() {
+  const { body } = useSelectRequest();
   const dispatch = useDispatch();
 
-  const bodyKeys: (keyof BodyData)[] = ['NONE', 'JSON', 'XML', 'HTML', 'Raw'];
-
-  const labelMapping: Record<string, string> = {
-    NONE: 'None',
-    JSON: 'JSON',
-    XML: 'XML',
-    HTML: 'HTML',
-    FormData: 'Form-Data',
-    Raw: 'Raw',
-    XWwwForm: 'x-www-form-urlencoded',
+  const handleChangeActiveBody = (key: string) => {
+    dispatch(requestActions.setActiveBody(key as any));
   };
-
-  const handleChangeActiveBody = useCallback((key: keyof BodyData) => {
-    const action: BodyAction = {
-      type: 'changeActiveBody',
-      payload: { index: index, key: key },
-    };
-    dispatch(action);
-  }, []);
 
   return (
     <Tabs
-      value={activeTab}
-      onChange={(e, newValue) => {
-        handleChangeActiveBody(newValue as keyof BodyData);
+      value={body.active}
+      onChange={(e, newValue: string) => {
+        handleChangeActiveBody(newValue);
       }}
       variant='scrollable'
       scrollButtons='auto'
     >
-      {bodyKeys.map((key) => (
-        <Tab key={key} className='tab' label={labelMapping[key]} value={key} />
+      <Tab className='tab' label='none' {...a11yProps('NONE')} />
+      {Object.keys(body.data).map((key) => (
+        <Tab key={key} className='tab' label={key} {...a11yProps(key)} />
       ))}
     </Tabs>
   );

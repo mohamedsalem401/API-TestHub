@@ -16,7 +16,7 @@ export function RequestContainer() {
     >
       <URIContainer />
       <RequestHeadersContainer />
-      {/* <RequestBodyContainer /> */}
+      <RequestBodyContainer />
     </Box>
   );
 }

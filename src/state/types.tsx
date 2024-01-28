@@ -1,6 +1,4 @@
-import { BodyAction } from './BodyAction';
 import { AxiosResponse } from 'axios';
-import { RequestAction } from './RequestAction';
 
 export interface HttpHeader {
   [key: string]: string;
@@ -48,5 +46,3 @@ export type HttpState = {
   };
   response: HttpResponse;
 };
-
-export type HttpStateAction = BodyAction | RequestAction;

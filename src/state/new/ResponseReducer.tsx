@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
 import axios, { AxiosError } from 'axios';
-import { RequestState } from './RequestReducer';
+import { RequestState, getActiveBody } from './RequestReducer';
 
 interface Res {
   body: any;
@@ -27,7 +27,11 @@ const initialState: ResponseState = {
 export const sendHttpReq = createAsyncThunk(
   'sendRequest',
   async (reqState: RequestState, { rejectWithValue }) => {
-    const { method, url, headers } = reqState;
+    const { method, url, headers, body } = reqState;
+
+    //TODO
+    const activeBody = getActiveBody(body);
+
     const reqHeaders: Record<string, string> = {};
 
     headers.forEach((header) => {
