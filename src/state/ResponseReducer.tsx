@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
 import axios, { AxiosError } from 'axios';
 import { RequestState, getActiveBody } from './RequestReducer';
+import { generateAxiosConfig } from '../helpers/generate-axios-config';
 
 interface Res {
   body: any;
@@ -29,18 +30,15 @@ export const sendHttpReq = createAsyncThunk(
   async (reqState: RequestState, { rejectWithValue }) => {
     const { method, url, headers, body } = reqState;
 
-    //TODO
-    const activeBody = getActiveBody(body);
-
-    const reqHeaders: Record<string, string> = {};
-
-    headers.forEach((header) => {
-      reqHeaders[header.key] = header.value;
+    const axiosConfig = generateAxiosConfig({
+      body,
+      headers,
+      method,
     });
 
     const startTime = performance.now();
     try {
-      const res = await axios(url, { method, headers: reqHeaders });
+      const res = await axios(url, axiosConfig);
 
       const endTime = performance.now();
 
