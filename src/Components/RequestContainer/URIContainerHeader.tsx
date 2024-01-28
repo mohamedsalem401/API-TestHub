@@ -1,8 +1,8 @@
 import { Box, Button, Tab, Tabs } from '@mui/material';
 import { PlayCircle } from '@mui/icons-material';
 import { useDispatch } from 'react-redux';
-import { sendHttpReq, useSelectResponse } from '../../state/new/ResponseReducer';
-import { useSelectRequest } from '../../state/new/RequestReducer';
+import { sendHttpReq, useSelectResponse } from '../../state/ResponseReducer';
+import { useSelectRequest } from '../../state/RequestReducer';
 
 export function URIContainerHeader() {
   const reqState = useSelectRequest();

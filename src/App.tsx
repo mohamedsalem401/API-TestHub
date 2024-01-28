@@ -1,7 +1,7 @@
 import ApiEndpoint from './ApiTester';
 import { Box } from '@mui/material';
 import { Provider } from 'react-redux';
-import { store } from './state/new';
+import { store } from './state';
 
 function App() {
   return (

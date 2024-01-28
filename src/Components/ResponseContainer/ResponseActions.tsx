@@ -1,6 +1,6 @@
 import { Alert, Box, IconButton } from '@mui/material';
 import { ContentCopy, Download, OpenInFull } from '@mui/icons-material';
-import { useSelectResponse } from '../../state/new/ResponseReducer';
+import { useSelectResponse } from '../../state/ResponseReducer';
 
 export function ResponseActions() {
   const { res } = useSelectResponse();

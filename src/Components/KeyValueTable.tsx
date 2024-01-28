@@ -1,6 +1,6 @@
 import { Box, IconButton } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { requestActions, type Header } from '../state/new/RequestReducer';
+import { requestActions, type Header } from '../state/RequestReducer';
 import { Delete } from '@mui/icons-material';
 import { useDispatch } from 'react-redux';
 

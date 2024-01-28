@@ -1,7 +1,7 @@
 import { Box, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { useDispatch } from 'react-redux';
+import { requestActions, useSelectRequest } from '../../state/RequestReducer';
 import { HttpMethod } from '../../state/types';
-import { requestActions, useSelectRequest } from '../../state/new/RequestReducer';
 
 export function URIContainerBody() {
   const { method, url } = useSelectRequest();

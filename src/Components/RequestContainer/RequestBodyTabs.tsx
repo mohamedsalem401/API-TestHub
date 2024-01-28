@@ -1,7 +1,7 @@
 import { Tab, Tabs } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { a11yProps } from '../../helpers/a11yProps';
-import { requestActions, useSelectRequest } from '../../state/new/RequestReducer';
+import { requestActions, useSelectRequest } from '../../state/RequestReducer';
 
 export function RequestBodyTabs() {
   const { body } = useSelectRequest();

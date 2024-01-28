@@ -1,7 +1,7 @@
 import { Editor } from '@monaco-editor/react';
 import { Box } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import { useSelectRequest, requestActions, type BodyKey } from '../../state/new/RequestReducer';
+import { useSelectRequest, requestActions, type BodyKey } from '../../state/RequestReducer';
 
 export function RequestBody() {
   const { body } = useSelectRequest();

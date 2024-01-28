@@ -3,7 +3,7 @@ import { KeyValueTable } from '../KeyValueTable';
 import { useDispatch } from 'react-redux';
 
 import { a11yProps } from '../../helpers/a11yProps';
-import { type Header, requestActions, useSelectRequest } from '../../state/new/RequestReducer';
+import { type Header, requestActions, useSelectRequest } from '../../state/RequestReducer';
 import { useState } from 'react';
 import { CreateHeaderModal } from './CreateHeaderModal';
 

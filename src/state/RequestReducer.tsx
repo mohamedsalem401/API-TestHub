@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { HttpMethod } from '../types';
 import { useSelector } from 'react-redux';
+import { HttpMethod } from './types';
 
 export interface Header {
   id: string;
@@ -8,9 +8,7 @@ export interface Header {
   value: string;
 }
 
-export type SupportedBodyTypes = 'json' | 'html' | 'xml';
-
-interface BodyState {
+export interface BodyState {
   active: number;
   data: {
     json: {
@@ -121,14 +119,16 @@ export const getActiveBody = (body: BodyState) => {
     return;
   }
 
-  const activeBody = Object.keys(body.data).find((k) => body.data[k as BodyKey].id === body.active);
+  const activeBody = Object.keys(body.data).find(
+    (k) => body.data[k as BodyKey].id === body.active
+  ) as BodyKey | undefined;
 
   if (!activeBody) {
     throw new Error('Active body not found');
   }
 
   return {
-    type: activeBody as SupportedBodyTypes,
-    value: body.data[activeBody as BodyKey].value,
+    type: activeBody,
+    value: body.data[activeBody].value,
   };
 };

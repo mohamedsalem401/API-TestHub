@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelectResponse } from '../../state/new/ResponseReducer';
+import { useSelectResponse } from '../../state/ResponseReducer';
 import { Tab, Tabs } from '@mui/material';
 import { ResponseBody } from './ResponseBody';
 import { a11yProps } from '../../helpers/a11yProps';
