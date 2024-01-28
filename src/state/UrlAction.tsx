@@ -1,8 +1,8 @@
-import { HttpState } from "./types";
+import { HttpState } from './types';
 
 export type UrlAction = {
-  type: "changeUrl";
-  payload: { index: number; newUrl: string; };
+  type: 'changeUrl';
+  payload: { index: number; newUrl: string };
 };
 
 export const handleUrlChange = (index: number, arr: HttpState[], newUrl: string) => {

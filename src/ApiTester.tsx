@@ -1,19 +1,19 @@
-import { Box } from "@mui/material";
-import { ResponseContainer } from "./ResponseContainer";
-import { RequestContainer } from "./RequestContainer";
+import { Box } from '@mui/material';
+import { RequestContainer } from './Components/RequestContainer';
+// import { ResponseContainer } from './Components/ResponseContainer';
 
-const ApiEndpoint = ({ index }: { index: number }) => {
+const ApiEndpoint = () => {
   return (
     <Box
       style={{
-        display: "flex",
-        flexDirection: "row",
-        width: "100%",
-        gap: "80px",
+        display: 'flex',
+        flexDirection: 'row',
+        width: '100%',
+        gap: '80px',
       }}
     >
-      <RequestContainer index={index} />
-      <ResponseContainer index={index} />
+      <RequestContainer />
+      {/* <ResponseContainer /> */}
     </Box>
   );
 };
