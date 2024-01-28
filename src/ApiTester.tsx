@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { RequestContainer } from './Components/RequestContainer';
-// import { ResponseContainer } from './Components/ResponseContainer';
+import { ResponseContainer } from './Components/ResponseContainer';
 
 const ApiEndpoint = () => {
   return (
@@ -13,7 +13,7 @@ const ApiEndpoint = () => {
       }}
     >
       <RequestContainer />
-      {/* <ResponseContainer /> */}
+      <ResponseContainer />
     </Box>
   );
 };

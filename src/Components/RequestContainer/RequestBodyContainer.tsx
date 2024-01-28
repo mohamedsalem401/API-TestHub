@@ -1,6 +1,5 @@
 import { Editor } from '@monaco-editor/react';
-import { Box, TextField, Typography } from '@mui/material';
-import { HeaderAction } from '../../state/HeaderAction';
+import { Box, Typography } from '@mui/material';
 import { RequestBodyTabs } from './RequestBodyTabs';
 import { useDispatch, useSelector } from 'react-redux';
 import { getActiveTab as getRequestBodyActiveTab } from './getActiveTab';

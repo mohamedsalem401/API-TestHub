@@ -1,20 +1,17 @@
-import { UrlAction } from "./UrlAction";
-import { HeaderAction } from "./HeaderAction";
-import { MethodAction } from "./MethodAction";
-import { BodyAction } from "./BodyAction";
-import { AxiosResponse } from "axios";
-import { RequestAction } from "./RequestAction";
+import { BodyAction } from './BodyAction';
+import { AxiosResponse } from 'axios';
+import { RequestAction } from './RequestAction';
 
 export interface HttpHeader {
   [key: string]: string;
 }
 
 export enum HttpMethod {
-  GET = "GET",
-  POST = "POST",
-  PUT = "PUT",
-  DELETE = "DELETE",
-  PATCH = "PATCH",
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  DELETE = 'DELETE',
+  PATCH = 'PATCH',
 }
 
 export type BodyData = {
@@ -52,9 +49,4 @@ export type HttpState = {
   response: HttpResponse;
 };
 
-export type HttpStateAction =
-  | UrlAction
-  | HeaderAction
-  | MethodAction
-  | BodyAction
-  | RequestAction;
+export type HttpStateAction = BodyAction | RequestAction;

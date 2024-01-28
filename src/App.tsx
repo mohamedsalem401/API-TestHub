@@ -5,17 +5,11 @@ import { store } from './state/new';
 
 function App() {
   return (
-    <Box
-      style={{
-        padding: 32,
-        display: 'flex',
-        width: '100%',
-      }}
-    >
-      <Provider store={store}>
+    <Provider store={store}>
+      <Box sx={{ p: '32px' }} component='main'>
         <ApiEndpoint />
-      </Provider>
-    </Box>
+      </Box>
+    </Provider>
   );
 }
 
