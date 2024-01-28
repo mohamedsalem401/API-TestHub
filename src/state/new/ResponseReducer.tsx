@@ -7,6 +7,7 @@ interface Res {
   body: any;
   code: number;
   time: number;
+  headers?: Record<string, string>;
 }
 
 interface ResponseState {
@@ -42,6 +43,7 @@ export const sendHttpReq = createAsyncThunk(
       return {
         body: res.data,
         code: res.status,
+        headers: res.headers as Record<string, string>,
         time: endTime - startTime,
       };
     } catch (err) {
@@ -53,6 +55,7 @@ export const sendHttpReq = createAsyncThunk(
         data: error.message,
         code: error.response?.status,
         time: endTime - startTime,
+        headers: error.response?.headers,
       });
     }
   }
@@ -71,13 +74,16 @@ const responseSlice = createSlice({
       state.res = action.payload;
     });
     builder.addCase(sendHttpReq.rejected, (state, action) => {
-      const { payload } = action as { payload: { data?: string; code?: number; time: number } };
+      const { payload } = action as {
+        payload: { data?: string; code?: number; time: number; headers?: Record<string, string> };
+      };
 
       state.isPending = false;
       state.res = {
         body: payload.data || 'Something went wrong',
         code: payload.code || 500,
         time: payload.time,
+        headers: payload.headers || {},
       };
     });
   },

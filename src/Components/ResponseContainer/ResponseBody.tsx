@@ -1,25 +1,17 @@
-import { Box } from "@mui/material";
-import { useSelector } from "react-redux";
-import { Editor } from "@monaco-editor/react";
-import { getResonseBody } from "./RequestStateHandlers";
-import { getResponseExtension } from "./RequestStateHandlers";
+import { Box } from '@mui/material';
+import { Editor } from '@monaco-editor/react';
 
-export function ResponseBody({ index }: { index: number; }) {
-  const body = useSelector(getResonseBody(index));
-  const language = useSelector(getResponseExtension(index));
-
+export function ResponseBody({ value }: { value: any }) {
   return (
     <Box>
       <Editor
-        width="100%"
-        height="300px"
-        value={JSON.stringify(body, null, 2)}
-        language={language}
-        theme="vs-dark"
+        width='100%'
+        height='300px'
+        value={JSON.stringify(value, null, 2)}
+        theme='vs-dark'
         options={{ readOnly: true }}
-        onChange={(value) => {
-          // handleChangeActiveBody(value || "");
-        }} />
+        defaultLanguage='json'
+      />
     </Box>
   );
 }

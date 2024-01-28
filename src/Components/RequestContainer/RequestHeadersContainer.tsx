@@ -2,16 +2,10 @@ import { Box, Tab, Tabs, Typography } from '@mui/material';
 import { KeyValueTable } from '../KeyValueTable';
 import { useDispatch } from 'react-redux';
 
+import { a11yProps } from '../../helpers/a11yProps';
 import { type Header, requestActions, useSelectRequest } from '../../state/new/RequestReducer';
 import { useState } from 'react';
 import { CreateHeaderModal } from './CreateHeaderModal';
-
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
 
 export function RequestHeadersContainer() {
   const dispatch = useDispatch();

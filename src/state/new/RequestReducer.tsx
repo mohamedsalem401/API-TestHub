@@ -16,7 +16,7 @@ export interface RequestState {
 
 const initialState: RequestState = {
   method: HttpMethod.GET,
-  url: 'https://dummy.restapiexample.com/api/v1/employees',
+  url: 'https://jsonplaceholder.typicode.com/todos',
   headers: [
     {
       id: '999',
