@@ -53,7 +53,9 @@ const requestSlice = createSlice({
         state.headers[index] = { ...state.headers[index], ...header };
       }
     },
-    deleteHeader(state, action: { payload: string }) {},
+    deleteHeader(state, action: { payload: string }) {
+      state.headers = state.headers.filter((h) => h.id !== action.payload);
+    },
   },
 });
 

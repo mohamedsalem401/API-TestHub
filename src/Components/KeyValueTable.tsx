@@ -1,10 +1,32 @@
-import { Box } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { type Header } from '../state/new/RequestReducer';
+import { requestActions, type Header } from '../state/new/RequestReducer';
+import { Delete } from '@mui/icons-material';
+import { useDispatch } from 'react-redux';
 
 const columns: GridColDef[] = [
   { field: 'key', headerName: 'key', editable: true, width: 150 },
   { field: 'value', headerName: 'value', editable: true, width: 150 },
+  {
+    field: 'actions',
+    renderHeader: () => null,
+    sortable: false,
+    renderCell: (row) => {
+      const { id } = row.row;
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const dispatch = useDispatch();
+
+      return (
+        <IconButton
+          aria-label='delete'
+          color='error'
+          onClick={() => dispatch(requestActions.deleteHeader(id))}
+        >
+          <Delete />
+        </IconButton>
+      );
+    },
+  },
 ];
 
 interface KeyValueTableProps {
