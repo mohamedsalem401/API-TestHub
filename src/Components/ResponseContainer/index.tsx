@@ -1,7 +1,6 @@
-import { Box, TextField } from '@mui/material';
-import { ResponseBody } from './ResponseBody';
-import { ResponseTabs } from './ResponseTabs';
+import { Box } from '@mui/material';
 import { ResponseActions } from './ResponseActions';
+import { ResponseResults } from './ResponseResults';
 
 export function ResponseContainer() {
   return (
@@ -15,12 +14,8 @@ export function ResponseContainer() {
         gap: '16px',
       }}
     >
-      {/* Header */}
       <ResponseActions />
-
-      {/* <ResponseTabs />
-
-      <ResponseBody /> */}
+      <ResponseResults />
     </Box>
   );
 }
